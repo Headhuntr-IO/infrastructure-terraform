@@ -1,7 +1,7 @@
 locals {
-  vpc_name         = "hhv2-vpc"
-  eks_cluster_name = "hhv2-eks"
-
+  vpc_name                 = "hhv2-vpc"
+  eks_cluster_name         = "hhv2-eks"
+  eks_worker_instance_type = var.eks_worker_instance_type
 
   common_tags = {
     Project     = "HeadhuntrV2"
@@ -21,11 +21,20 @@ terraform {
   }
 }
 
-provider "tls" {
-  version = ">= 2.1.1"
-}
-
 provider "aws" {
   version = ">= 2.65.0"
   region  = var.aws_region
 }
+
+provider "kubernetes" {
+  host                   = element(concat(data.aws_eks_cluster.cluster[*].endpoint, list("")), 0)
+  cluster_ca_certificate = base64decode(element(concat(data.aws_eks_cluster.cluster[*].certificate_authority.0.data, list("")), 0))
+  token                  = element(concat(data.aws_eks_cluster_auth.cluster[*].token, list("")), 0)
+  load_config_file       = false
+}
+
+provider "tls" {
+  version = ">= 2.1.1"
+}
+
+

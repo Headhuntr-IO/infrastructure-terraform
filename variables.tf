@@ -27,3 +27,16 @@ variable "vpc_subnet_private" {
   type        = list(string)
   default     = ["10.5.101.0/24", "10.5.102.0/24", "10.5.103.0/24"]
 }
+
+variable "eks_iam_mapping" {
+  type = map
+
+  default = {
+    "ci-user" = "build_pipeline"
+  }
+}
+
+variable "eks_worker_instance_type" {
+  type    = string
+  default = "t3.medium"
+}
