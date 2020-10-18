@@ -40,3 +40,18 @@ variable "eks_worker_instance_type" {
   type    = string
   default = "t3.medium"
 }
+
+variable "es_instance_type" {
+  type    = string
+  default = "r5.large.elasticsearch"
+}
+
+variable "es_instance_count" {
+  type    = number
+  default = 3
+}
+
+variable "es_volume_size" {
+  type    = number
+  default = 100
+}

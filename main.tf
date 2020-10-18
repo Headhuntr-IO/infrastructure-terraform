@@ -1,7 +1,12 @@
 locals {
-  vpc_name                 = "hhv2-vpc"
+  vpc_name = "hhv2-vpc"
+
   eks_cluster_name         = "hhv2-eks"
   eks_worker_instance_type = var.eks_worker_instance_type
+
+  es_domain         = "hhv2-es"
+  es_instance_type  = var.es_instance_type
+  es_instance_count = var.es_instance_count
 
   common_tags = {
     Project     = "HeadhuntrV2"
