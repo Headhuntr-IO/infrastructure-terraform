@@ -4,3 +4,8 @@
 
 .idea
 *.iml
+
+gradlew
+gradlew.bat
+gradle/
+.gradle
