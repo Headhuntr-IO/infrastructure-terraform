@@ -1,0 +1,1 @@
+You have successfully installed kube-utils on the cluster: {{ .Values.clusterName }}
