@@ -1,0 +1,27 @@
+#apiVersion: batch/v1
+#kind: Job
+#metadata:
+#  name: "{{ .Release.Name }}"
+#  labels:
+#    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+#    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+#    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+#    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+#  annotations:
+#    "helm.sh/hook": pre-install
+#    "helm.sh/hook-weight": "-5"
+#    "helm.sh/hook-delete-policy": hook-succeeded
+#spec:
+#  template:
+#    metadata:
+#      name: "{{ .Release.Name }}"
+#      labels:
+#        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+#        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+#        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+#    spec:
+#      restartPolicy: Never
+#      containers:
+#      - name: pre-install-job
+#        image: "startupbuilder/hhv2-search-service-es-initializer:latest"
+#        command: ["newman", "run", "es_data_initializer.postman_collection.json", "--env-var", "ELASTICSEARCH_URL=https://{{ .Values.config.es.host }}:443", "--env-var", "ES_SHARDS=1", "--env-var", "ES_REPLICAS=1"]

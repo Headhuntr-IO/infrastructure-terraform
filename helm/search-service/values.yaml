@@ -1,0 +1,72 @@
+# Default values for application-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: startupbuilder/hhv2-search-service
+  pullPolicy: Always
+  tag: "0.0.1-SNAPSHOT"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+config:
+  es:
+    host: localhost
+
+service:
+  type: LoadBalancer
+  port: 80
+  annotations:
+    albTags: "unknown"
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: search-service.local
+      paths: []
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+  requests:
+    cpu: 500m
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

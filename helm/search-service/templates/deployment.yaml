@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "search-service.fullname" . }}
+  labels:
+    {{- include "search-service.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "search-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "search-service.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "search-service.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            periodSeconds: 60
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            periodSeconds: 60
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: SERVER_PORT
+              value: '80'
+            - name: DEBUG
+              value: 'true'
+            - name: AWS_XRAY_CONTEXT_MISSING
+              value: LOG_ERROR
+            - name: INFO_APP_VERSION
+              value: {{ .Values.image.tag }}
+            - name: SPRING_ELASTICSEARCH_REST_URIS
+              value: https://{{ .Values.config.es.host }}:443
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
