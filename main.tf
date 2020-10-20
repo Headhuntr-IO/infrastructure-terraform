@@ -48,6 +48,10 @@ provider "helm" {
   }
 }
 
+provider "external" {
+  version = "~> 1.2"
+}
+
 provider "tls" {
   version = ">= 2.1.1"
 }
