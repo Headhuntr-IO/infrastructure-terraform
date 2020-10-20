@@ -55,3 +55,13 @@ resource "aws_security_group" "db_search" {
     Name = "${module.vpc.name}-Elasticsearch SG"
   }, local.common_tags)
 }
+
+resource "aws_security_group_rule" "es_ingress_worker" {
+  description              = "Allow workers pods access to Elasticsearch API"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.db_search.id
+  source_security_group_id = module.eks_cluster.cluster_primary_security_group_id
+  type                     = "ingress"
+}
