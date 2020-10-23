@@ -36,4 +36,9 @@ resource "helm_release" "kube_utils" {
     name  = "clusterName"
     value = local.eks_cluster_name
   }
+
+  set {
+    name  = "xrayDaemonRole"
+    value = module.eks_cluster.worker_iam_role_arn
+  }
 }

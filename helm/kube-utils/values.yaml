@@ -1,1 +1,2 @@
 clusterName: "prod-cluster"
+xrayDaemonRole: "arn:aws:iam::xxxxxxxxx:role/hhv2-eks20201022xxxxx"

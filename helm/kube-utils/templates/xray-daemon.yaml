@@ -18,18 +18,8 @@ metadata:
     app: xray-daemon
   name: xray-daemon
   namespace: default
-  # IAM permissions for AWS X-Ray daemon.
-  # Run `eksctl create iamserviceaccount \
-  #  --name service_account_name \
-  #  --namespace service_account_namespace \
-  #  --cluster cluster_name \
-  #  --attach-policy-arn arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess \
-  #  --approve \
-  #  --override-existing-serviceaccounts`
-  #
-  # Then uncomment the next two lines and add your new role-arn.
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::xxxxx:role/xxxxx
+    eks.amazonaws.com/role-arn: {{ .Values.xrayDaemonRole }}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -52,7 +42,7 @@ spec:
             name: "xray-config"
       containers:
         - name: xray-daemon
-          image: xxxxx.dkr.ecr.us-east-1.amazonaws.com/xray-daemon:latest
+          image: startupbuilder/xray-daemon:latest
           command: ["/usr/bin/xray", "-c", "/aws/xray/config.yaml"]
           resources:
             requests:
