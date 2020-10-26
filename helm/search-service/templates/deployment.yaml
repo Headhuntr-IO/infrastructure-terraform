@@ -56,6 +56,8 @@ spec:
               value: '80'
             - name: DEBUG
               value: 'true'
+            - name: AWS_XRAY_DAEMON_ADDRESS
+              value: 'xray-service.default:2000'
             - name: AWS_XRAY_CONTEXT_MISSING
               value: LOG_ERROR
             - name: INFO_APP_VERSION
