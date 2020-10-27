@@ -56,6 +56,10 @@ resource "aws_apigatewayv2_integration" "eks_internal" {
   integration_type   = "HTTP_PROXY"
   integration_method = "ANY"
   integration_uri    = data.aws_lb_listener.eks_internal.arn
+
+  lifecycle {
+    ignore_changes = [integration_uri]
+  }
 }
 
 variable "http_methods" {

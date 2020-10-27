@@ -8,6 +8,8 @@ locals {
   es_instance_type  = var.es_instance_type
   es_instance_count = var.es_instance_count
 
+  cognito_user_pool_name = "hhv2-auth"
+
   common_tags = {
     Project     = "HeadhuntrV2"
     Owner       = "terraformV2"
