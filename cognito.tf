@@ -68,3 +68,19 @@ resource "aws_cognito_user_pool" "main" {
 
   tags = local.common_tags
 }
+
+resource "aws_cognito_user_pool_domain" "main" {
+  domain       = local.cognito_domain
+  user_pool_id = aws_cognito_user_pool.main.id
+}
+
+resource "aws_cognito_user_pool_client" "ios_client" {
+  name            = "ios_client"
+  user_pool_id    = aws_cognito_user_pool.main.id
+  generate_secret = true
+  explicit_auth_flows = [
+    "ALLOW_USER_PASSWORD_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH"
+  ]
+}

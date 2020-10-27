@@ -9,6 +9,7 @@ locals {
   es_instance_count = var.es_instance_count
 
   cognito_user_pool_name = "hhv2-auth"
+  cognito_domain         = "hhv2"
 
   common_tags = {
     Project     = "HeadhuntrV2"
