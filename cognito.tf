@@ -8,6 +8,8 @@ resource "aws_cognito_user_pool" "main" {
 
   username_attributes = ["email"]
 
+  auto_verified_attributes = []
+
   schema {
     name                = "email"
     attribute_data_type = "String"
@@ -16,49 +18,76 @@ resource "aws_cognito_user_pool" "main" {
   }
 
   schema {
-    name                = "birthdate"
-    attribute_data_type = "String"
-    required            = true
-  }
-
-  schema {
-    name                = "family_name"
-    attribute_data_type = "String"
-    required            = true
+    name                     = "birthdate"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = true
 
     string_attribute_constraints {
-      min_length = "1"
+      min_length = "10"
+      max_length = "10"
     }
   }
 
   schema {
-    name                = "given_name"
-    attribute_data_type = "String"
-    required            = true
+    name                     = "family_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = true
 
     string_attribute_constraints {
       min_length = "1"
+      max_length = "2048"
     }
   }
 
   schema {
-    name                = "middle_name"
-    attribute_data_type = "String"
-    required            = true
+    name                     = "given_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = true
 
     string_attribute_constraints {
       min_length = "1"
+      max_length = "2048"
     }
   }
 
   schema {
-    name                = "gender"
-    attribute_data_type = "String"
-    required            = true
+    name                     = "middle_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = true
+
+    string_attribute_constraints {
+      min_length = "1"
+      max_length = "2048"
+    }
+  }
+
+  schema {
+    name                     = "gender"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = true
+
+    string_attribute_constraints {
+      min_length = "1"
+    }
   }
 
   password_policy {
-    minimum_length = 8
+    minimum_length                   = 8
+    require_lowercase                = false
+    require_numbers                  = false
+    require_symbols                  = false
+    require_uppercase                = false
+    temporary_password_validity_days = 2
   }
 
   //TODO: figure out how to dynamically create this
@@ -78,9 +107,16 @@ resource "aws_cognito_user_pool_client" "ios_client" {
   name            = "ios_client"
   user_pool_id    = aws_cognito_user_pool.main.id
   generate_secret = true
+
   explicit_auth_flows = [
     "ALLOW_USER_PASSWORD_AUTH",
     "ALLOW_USER_SRP_AUTH",
     "ALLOW_REFRESH_TOKEN_AUTH"
   ]
+
+  supported_identity_providers = ["COGNITO"]
+  callback_urls                = ["http://localhost:8080/auth/callback"]
+  logout_urls                  = ["http://localhost:8080/auth/logout"]
+  allowed_oauth_flows          = ["code", "implicit"]
+  allowed_oauth_scopes         = ["openid", "email"]
 }
