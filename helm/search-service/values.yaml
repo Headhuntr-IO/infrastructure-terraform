@@ -38,6 +38,9 @@ securityContext: {}
 config:
   es:
     host: localhost
+  cognito:
+    region: us-east-1
+    poolId: us-east-1-xxx
 
 service:
   type: LoadBalancer

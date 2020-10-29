@@ -15,6 +15,11 @@ resource "aws_cognito_user_pool" "main" {
     attribute_data_type = "String"
     mutable             = false
     required            = true
+
+    string_attribute_constraints {
+      min_length = "3"
+      max_length = "100"
+    }
   }
 
   schema {
@@ -78,6 +83,7 @@ resource "aws_cognito_user_pool" "main" {
 
     string_attribute_constraints {
       min_length = "1"
+      max_length = "2048"
     }
   }
 

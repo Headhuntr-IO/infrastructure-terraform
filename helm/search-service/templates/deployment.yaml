@@ -58,6 +58,8 @@ spec:
               value: 'true'
             - name: AWS_XRAY_DAEMON_ADDRESS
               value: 'xray-service.default:2000'
+            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI
+              value: "https://cognito-idp.{{ .Values.config.cognito.region }}.amazonaws.com/{{ .Values.config.cognito.poolId }}/.well-known/jwks.json"
             - name: AWS_XRAY_CONTEXT_MISSING
               value: LOG_ERROR
             - name: INFO_APP_VERSION
