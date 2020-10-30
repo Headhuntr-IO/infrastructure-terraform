@@ -43,12 +43,12 @@ variable "eks_worker_instance_type" {
 
 variable "es_instance_type" {
   type    = string
-  default = "r5.large.elasticsearch"
+  default = "m5.large.elasticsearch"
 }
 
 variable "es_instance_count" {
   type    = number
-  default = 3
+  default = 1
 }
 
 variable "es_volume_size" {
