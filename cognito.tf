@@ -8,7 +8,7 @@ resource "aws_cognito_user_pool" "main" {
 
   username_attributes = ["email"]
 
-  auto_verified_attributes = []
+  auto_verified_attributes = ["email"]
 
   schema {
     name                = "email"
@@ -98,8 +98,13 @@ resource "aws_cognito_user_pool" "main" {
 
   //TODO: figure out how to dynamically create this
   email_configuration {
-    source_arn = "arn:aws:ses:us-east-1:327229172692:identity/contact@miiingle.net"
+    email_sending_account  = "DEVELOPER"
+    from_email_address     = "contact@miiingle.net"
+    reply_to_email_address = "contact@miiingle.net"
+    source_arn             = "arn:aws:ses:us-east-1:327229172692:identity/contact@miiingle.net"
   }
+
+  sms_authentication_message = "Your authentication code is {####}. "
 
   tags = local.common_tags
 }

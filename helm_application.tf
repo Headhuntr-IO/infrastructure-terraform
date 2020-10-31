@@ -15,13 +15,13 @@ resource "helm_release" "application_search_service" {
   }
 
   set {
-    name = "config.cognito.poolId"
+    name  = "config.cognito.poolId"
     value = aws_cognito_user_pool.main.id
   }
 
   //TODO: use a reference to the cognito user pool
   set {
-    name = "config.cognito.region"
+    name  = "config.cognito.region"
     value = var.aws_region
   }
 }
