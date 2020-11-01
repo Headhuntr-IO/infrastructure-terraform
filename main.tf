@@ -11,6 +11,13 @@ locals {
   cognito_user_pool_name = "hhv2-auth"
   cognito_domain         = "hhv2"
 
+  internal_processor_bucket_name           = "hhv2.headhuntr.io.data-proc"
+  internal_processor_lambda_role_name      = "hhv2-main-lambda-role"
+  internal_processor_lambda_libraries_name = "libraries"
+  internal_processor_lambda_function_name  = "main"
+  internal_processor_lambda_bucket         = "hhv2.headhuntr.io.deployment"
+  internal_processor_sqs_name              = "hhv2-main-sqs.fifo"
+
   common_tags = {
     Project     = "HeadhuntrV2"
     Owner       = "terraformV2"
