@@ -164,18 +164,19 @@ resource "aws_lambda_function" "main" {
 
   environment {
     variables = {
+      THIS_FUNCTION_NAME       = local.internal_processor_lambda_function_name
       ES_HOST                  = aws_elasticsearch_domain.db_search.endpoint
       S3_BUCKET_DATA_PROCESSOR = aws_s3_bucket.data_processor_workspace.bucket
       COMMAND_QUEUE_URL        = aws_sqs_queue.lambda_tasks.id
       //      RS_HOST                   = data.aws_redshift_cluster.shared.endpoint
       //      RS_REGION                 = data.aws_region.redshift_region.id
-      //      JAR_DATA_PROCESSOR        = ""
-      //      JAR_ES_HADOOP             = local.jar_es_hadoop
-      //      EMR_CLUSTER_NAME          = local.emr_cluster_name
-      //      EMR_WORKER_INSTANCE_TYPE  = local.emr_worker_instance_type
-      //      EMR_WORKER_INSTANCE_COUNT = local.emr_worker_instance_count
-      WORKER_SG     = module.eks_cluster.cluster_primary_security_group_id
-      WORKER_SUBNET = module.vpc.private_subnets[0]
+      JAR_DATA_PROCESSOR        = "s3://${local.internal_processor_lambda_bucket}/jars/search-loader-job-latest.jar"
+      JAR_ES_HADOOP             = "s3://${local.internal_processor_lambda_bucket}/jars/elasticsearch-hadoop-7.1.1.jar"
+      EMR_CLUSTER_NAME          = "hhv2-internal-processor"
+      EMR_WORKER_INSTANCE_TYPE  = "m5.xlarge"
+      EMR_WORKER_INSTANCE_COUNT = 1
+      WORKER_SG                 = module.eks_cluster.cluster_primary_security_group_id
+      WORKER_SUBNET             = module.vpc.private_subnets[0]
     }
   }
 
