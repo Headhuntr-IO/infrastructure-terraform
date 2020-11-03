@@ -5,6 +5,10 @@ resource "aws_apigatewayv2_api" "main" {
   protocol_type = "HTTP"
   tags          = local.common_tags
 
+  //docs
+  //https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions.html
+  //body = ""
+
   cors_configuration {
     allow_credentials = true
     allow_headers     = ["*"]
