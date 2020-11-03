@@ -1,0 +1,94 @@
+openapi: "3.0.1"
+info:
+  title: "hhv2-vpc-api-gateway"
+  description: "The only way into the backend"
+  version: "2020-11-03 10:39:29UTC"
+servers:
+  - url: "https://v798xp0ld7.execute-api.us-east-1.amazonaws.com/{basePath}"
+    variables:
+      basePath:
+        default: ""
+tags:
+  - name: "Project"
+    x-amazon-apigateway-tag-value: "HeadhuntrV2"
+  - name: "Environment"
+    x-amazon-apigateway-tag-value: "hhv2"
+  - name: "Owner"
+    x-amazon-apigateway-tag-value: "terraformV2"
+  - name: "BillingCode"
+    x-amazon-apigateway-tag-value: "hhv2-infra-2020-10-17"
+paths:
+  /{proxy+}:
+    get:
+      operationId: "GET Resource"
+      responses:
+        default:
+          description: "Default response for GET /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "1.0"
+        connectionId: "9763tu"
+        type: "http_proxy"
+        httpMethod: "ANY"
+        uri: "arn:aws:elasticloadbalancing:us-east-1:327229172692:listener/net/ae22663f181ac4cfba685c29f09574e7/8aaa50035cab3a19/f74277f17d8e35b0"
+        connectionType: "VPC_LINK"
+        timeoutInMillis: 29000
+    put:
+      operationId: "PUT Resource"
+      responses:
+        default:
+          description: "Default response for PUT /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "1.0"
+        connectionId: "9763tu"
+        type: "http_proxy"
+        httpMethod: "ANY"
+        uri: "arn:aws:elasticloadbalancing:us-east-1:327229172692:listener/net/ae22663f181ac4cfba685c29f09574e7/8aaa50035cab3a19/f74277f17d8e35b0"
+        connectionType: "VPC_LINK"
+        timeoutInMillis: 29000
+    post:
+      operationId: "POST Resource"
+      responses:
+        default:
+          description: "Default response for POST /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "1.0"
+        connectionId: "9763tu"
+        type: "http_proxy"
+        httpMethod: "ANY"
+        uri: "arn:aws:elasticloadbalancing:us-east-1:327229172692:listener/net/ae22663f181ac4cfba685c29f09574e7/8aaa50035cab3a19/f74277f17d8e35b0"
+        connectionType: "VPC_LINK"
+        timeoutInMillis: 29000
+    delete:
+      operationId: "DELETE Resource"
+      responses:
+        default:
+          description: "Default response for DELETE /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "1.0"
+        connectionId: "9763tu"
+        type: "http_proxy"
+        httpMethod: "ANY"
+        uri: "arn:aws:elasticloadbalancing:us-east-1:327229172692:listener/net/ae22663f181ac4cfba685c29f09574e7/8aaa50035cab3a19/f74277f17d8e35b0"
+        connectionType: "VPC_LINK"
+        timeoutInMillis: 29000
+    patch:
+      operationId: "PATCH Resource"
+      responses:
+        default:
+          description: "Default response for PATCH /{proxy+}"
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "1.0"
+        connectionId: "9763tu"
+        type: "http_proxy"
+        httpMethod: "ANY"
+        uri: "arn:aws:elasticloadbalancing:us-east-1:327229172692:listener/net/ae22663f181ac4cfba685c29f09574e7/8aaa50035cab3a19/f74277f17d8e35b0"
+        connectionType: "VPC_LINK"
+        timeoutInMillis: 29000
+x-amazon-apigateway-cors:
+  allowMethods:
+    - "*"
+  allowHeaders:
+    - "*"
+  maxAge: 300
+  allowCredentials: true
+x-amazon-apigateway-importexport-version: "1.0"
